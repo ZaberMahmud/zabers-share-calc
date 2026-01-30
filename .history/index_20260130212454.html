@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaber's Share Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> Zaber's Share Calculator</h1>
+            <p class="subtitle">Calculate new average price after additional purchase</p>
+        </header>
+
+        <main>
+            <div class="calculator-card">
+                <h2><i class="fas fa-chart-line"></i> Current Holdings</h2>
+                
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="currentShares">
+                            <i class="fas fa-layer-group"></i> Current Quantity
+                        </label>
+                        <input type="number" id="currentShares" placeholder="e.g., 6230" min="0" step="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="currentAvg">
+                            <i class="fas fa-tag"></i> Current Average Price
+                        </label>
+                        <input type="number" id="currentAvg" placeholder="e.g., 25.50" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="currentTotal">
+                            <i class="fas fa-money-bill-wave"></i> Current Total Cost (Optional)
+                        </label>
+                        <input type="number" id="currentTotal" placeholder="Auto-calculated" min="0" step="0.01" readonly>
+                    </div>
+                </div>
+
+                <h2><i class="fas fa-shopping-cart"></i> New Purchase</h2>
+                
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="newBuyAmount">
+                            <i class="fas fa-wallet"></i> Buy Amount (TK)
+                        </label>
+                        <input type="number" id="newBuyAmount" placeholder="e.g., 25194.00" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="newBuyRate">
+                            <i class="fas fa-dollar-sign"></i> Buy Rate (per share)
+                        </label>
+                        <input type="number" id="newBuyRate" placeholder="e.g., 24.70" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="brokerage">
+                            <i class="fas fa-percentage"></i> Brokerage & Charges (TK)
+                        </label>
+                        <input type="number" id="brokerage" placeholder="e.g., 125.97" min="0" step="0.01" value="0">
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button id="calculateBtn" class="btn calculate-btn">
+                        <i class="fas fa-calculator"></i> Calculate New Average
+                    </button>
+                    <button id="resetBtn" class="btn reset-btn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+
+                <div class="results" id="resultsSection">
+                    <h2><i class="fas fa-chart-bar"></i> Results</h2>
+                    
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <div class="result-label">New Shares Purchased</div>
+                            <div class="result-value" id="newShares">0</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-label">Total Shares After</div>
+                            <div class="result-value" id="totalSharesAfter">0</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-label">Total Cost After</div>
+                            <div class="result-value" id="totalCostAfter">0.00 TK</div>
+                        </div>
+                        
+                        <div class="result-card highlight">
+                            <div class="result-label">New Average Price</div>
+                            <div class="result-value" id="newAverage">0.00 TK</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cost-breakdown">
+                        <h3><i class="fas fa-receipt"></i> Cost Breakdown</h3>
+                        <div class="breakdown-item">
+                            <span>Current total cost:</span>
+                            <span id="breakdownCurrent">0.00 TK</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>New purchase cost:</span>
+                            <span id="breakdownPurchase">0.00 TK</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Brokerage & charges:</span>
+                            <span id="breakdownBrokerage">0.00 TK</span>
+                        </div>
+                        <div class="breakdown-item total">
+                            <span>Total cost after purchase:</span>
+                            <span id="breakdownTotal">0.00 TK</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> How It Works</h3>
+                <ol>
+                    <li>Enter your current share quantity and average price.</li>
+                    <li>Enter the amount you want to invest and the buying rate.</li>
+                    <li>Add any brokerage/transaction charges (if any).</li>
+                    <li>Click "Calculate New Average" to see results.</li>
+                </ol>
+                <p class="formula">
+                    <strong>Formula:</strong> New Avg = (Current Total Cost + New Purchase Amount + Brokerage) / (Current Qty + New Qty)
+                </p>
+                <div class="example">
+                    <h4><i class="fas fa-lightbulb"></i> Example from your data:</h4>
+                    <ul>
+                        <li>Current: 6,230 shares @ 25.50 avg</li>
+                        <li>Buy: 25,194 TK @ 24.70 rate</li>
+                        <li>Brokerage: 125.97 TK</li>
+                        <li>Result: <strong>25.40 TK</strong> new average</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Zaber's Share Calculator &copy; <span id="currentYear"></span> | Made with <i class="fas fa-heart"></i> for stock investors</p>
+            <p class="github-link">
+                <i class="fab fa-github"></i> 
+                <a href="https://github.com" target="_blank">View on GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

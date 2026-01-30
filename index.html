@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaber's Stock Tools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Zaber's Stock Tools</h1>
+                    <p class="tagline">Smart calculators for smart investors</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+                <button id="loadExamples" class="btn btn-outline">
+                    <i class="fas fa-magic"></i>
+                    <span>Load Examples</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="#average-calc" class="nav-link active" data-tool="average">
+                    <i class="fas fa-calculator"></i>
+                    <span>Average Calculator</span>
+                </a>
+                <a href="#quantity-calc" class="nav-link" data-tool="quantity">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Quantity Calculator</span>
+                </a>
+                <a href="#bonus-calc" class="nav-link" data-tool="bonus">
+                    <i class="fas fa-gift"></i>
+                    <span>Bonus/Dividend Calculator</span>
+                </a>
+                <a href="#about" class="nav-link" data-tool="about">
+                    <i class="fas fa-info-circle"></i>
+                    <span>How It Works</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Average Calculator -->
+            <section id="average-calc" class="tool-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Average Price Calculator</h2>
+                    <p class="section-description">Calculate your new average price after buying more shares</p>
+                </div>
+                
+                <div class="calculator-card">
+                    <div class="card-header">
+                        <h3>Enter Your Data</h3>
+                        <div class="card-actions">
+                            <button class="btn-icon" id="resetAverage" title="Reset Form">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="currentShares" class="form-label">
+                                <i class="fas fa-boxes"></i> Current Quantity
+                            </label>
+                            <input type="number" id="currentShares" class="form-input" placeholder="e.g., 6230" min="0" step="1">
+                            <div class="form-hint">Leave empty if first purchase</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="currentAvg" class="form-label">
+                                <i class="fas fa-tag"></i> Current Average Price (৳)
+                            </label>
+                            <input type="number" id="currentAvg" class="form-input" placeholder="e.g., 25.50" min="0" step="0.01">
+                            <div class="form-hint">Leave empty if first purchase</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="currentTotal" class="form-label">
+                                <i class="fas fa-money-bill-wave"></i> Current Total Cost (৳)
+                            </label>
+                            <input type="number" id="currentTotal" class="form-input" placeholder="Auto-calculated" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="divider">
+                        <span><i class="fas fa-arrow-down"></i> New Purchase Details <i class="fas fa-arrow-down"></i></span>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="newBuyAmount" class="form-label">
+                                <i class="fas fa-wallet"></i> Buy Amount (৳)
+                            </label>
+                            <input type="number" id="newBuyAmount" class="form-input" placeholder="e.g., 25194.00" min="0" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newBuyRate" class="form-label">
+                                <i class="fas fa-dollar-sign"></i> Buy Rate (৳ per share)
+                            </label>
+                            <input type="number" id="newBuyRate" class="form-input" placeholder="e.g., 24.70" min="0" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="brokerage" class="form-label">
+                                <i class="fas fa-percentage"></i> Brokerage & Charges (৳)
+                            </label>
+                            <input type="number" id="brokerage" class="form-input" placeholder="e.g., 125.97" min="0" step="0.01" value="0">
+                            <div class="form-hint">Usually 0.5% of buy amount</div>
+                        </div>
+                    </div>
+                    
+                    <button id="calculateBtn" class="btn btn-primary btn-lg btn-block">
+                        <i class="fas fa-calculator"></i> Calculate New Average
+                    </button>
+                    
+                    <div class="results-card" id="averageResults">
+                        <div class="results-header">
+                            <h3><i class="fas fa-chart-bar"></i> Calculation Results</h3>
+                            <div class="results-badge">
+                                <span id="resultsStatus">Ready to calculate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">New Shares</div>
+                                    <div class="stat-value" id="newShares">0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-boxes-stacked"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Total Shares</div>
+                                    <div class="stat-value" id="totalSharesAfter">0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-money-bills"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Total Cost</div>
+                                    <div class="stat-value" id="totalCostAfter">৳ 0.00</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card highlight">
+                                <div class="stat-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">New Average Price</div>
+                                    <div class="stat-value" id="newAverage">৳ 0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h4>Cost Breakdown</h4>
+                            <div class="breakdown-list">
+                                <div class="breakdown-item">
+                                    <span>Current total cost:</span>
+                                    <span class="breakdown-value" id="breakdownCurrent">৳ 0.00</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>New purchase cost:</span>
+                                    <span class="breakdown-value" id="breakdownPurchase">৳ 0.00</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>Brokerage & charges:</span>
+                                    <span class="breakdown-value" id="breakdownBrokerage">৳ 0.00</span>
+                                </div>
+                                <div class="breakdown-item total">
+                                    <span>Total cost after purchase:</span>
+                                    <span class="breakdown-value" id="breakdownTotal">৳ 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quantity Calculator -->
+            <section id="quantity-calc" class="tool-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-layer-group"></i> Quantity Calculator</h2>
+                    <p class="section-description">Find out how many shares you can buy with your investment</p>
+                </div>
+                
+                <div class="calculator-card">
+                    <div class="card-header">
+                        <h3>Enter Investment Details</h3>
+                        <div class="card-actions">
+                            <button class="btn-icon" id="resetQuantity" title="Reset Form">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="calcAmount" class="form-label">
+                                <i class="fas fa-money-bill-wave"></i> Amount to Invest (৳)
+                            </label>
+                            <input type="number" id="calcAmount" class="form-input" placeholder="e.g., 73220.00" min="0" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="calcRate" class="form-label">
+                                <i class="fas fa-dollar-sign"></i> Current Share Price (৳)
+                            </label>
+                            <input type="number" id="calcRate" class="form-input" placeholder="e.g., 52.30" min="0" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="calcBrokerage" class="form-label">
+                                <i class="fas fa-percentage"></i> Brokerage & Charges (৳)
+                            </label>
+                            <input type="number" id="calcBrokerage" class="form-input" placeholder="e.g., 366.10" min="0" step="0.01" value="0">
+                            <div class="form-hint">Usually 0.5% of investment</div>
+                        </div>
+                    </div>
+                    
+                    <button id="calculateQtyBtn" class="btn btn-primary btn-lg btn-block">
+                        <i class="fas fa-calculator"></i> Calculate Quantity
+                    </button>
+                    
+                    <div class="results-card" id="quantityResults">
+                        <div class="results-header">
+                            <h3><i class="fas fa-chart-bar"></i> Investment Results</h3>
+                            <div class="results-badge success">
+                                <span id="qtyResultsStatus">Ready to calculate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-boxes"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Shares You Can Buy</div>
+                                    <div class="stat-value" id="quantityResult">0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Total Investment</div>
+                                    <div class="stat-value" id="totalCost">৳ 0.00</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Share Price</div>
+                                    <div class="stat-value" id="avgCost">৳ 0.00</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card highlight">
+                                <div class="stat-icon">
+                                    <i class="fas fa-calculator"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Average Cost per Share</div>
+                                    <div class="stat-value" id="avgCostFinal">৳ 0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h4>Investment Breakdown</h4>
+                            <div class="breakdown-list">
+                                <div class="breakdown-item">
+                                    <span>Investment amount:</span>
+                                    <span class="breakdown-value" id="breakdownAmount">৳ 0.00</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>Brokerage & charges:</span>
+                                    <span class="breakdown-value" id="breakdownQtyBrokerage">৳ 0.00</span>
+                                </div>
+                                <div class="breakdown-item total">
+                                    <span>Total amount needed:</span>
+                                    <span class="breakdown-value" id="breakdownQtyTotal">৳ 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bonus/Dividend Calculator -->
+            <section id="bonus-calc" class="tool-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-gift"></i> Bonus & Dividend Calculator</h2>
+                    <p class="section-description">Calculate cash dividends and bonus shares</p>
+                </div>
+                
+                <div class="calculator-card">
+                    <div class="card-header">
+                        <h3>Enter Dividend/Bonus Details</h3>
+                        <div class="card-actions">
+                            <button class="btn-icon" id="resetBonus" title="Reset Form">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-tabs">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" data-tab="dividend">
+                                <i class="fas fa-money-bill-wave"></i> Cash Dividend
+                            </button>
+                            <button class="tab-btn" data-tab="bonus">
+                                <i class="fas fa-gift"></i> Bonus Shares
+                            </button>
+                        </div>
+                        
+                        <!-- Cash Dividend Tab -->
+                        <div class="tab-content active" id="dividendTab">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="dividendShares" class="form-label">
+                                        <i class="fas fa-boxes"></i> Number of Shares
+                                    </label>
+                                    <input type="number" id="dividendShares" class="form-input" placeholder="e.g., 1400" min="0" step="1">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="dividendPercentage" class="form-label">
+                                        <i class="fas fa-percent"></i> Dividend Percentage
+                                    </label>
+                                    <input type="number" id="dividendPercentage" class="form-input" placeholder="e.g., 35" min="0" step="0.01" value="35">
+                                    <div class="form-hint">Percentage of face value (usually 10 Tk)</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="faceValue" class="form-label">
+                                        <i class="fas fa-tag"></i> Face Value per Share (৳)
+                                    </label>
+                                    <input type="number" id="faceValue" class="form-input" placeholder="e.g., 10" min="0" step="0.01" value="10">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="taxRate" class="form-label">
+                                        <i class="fas fa-scale-balanced"></i> Tax Rate (%)
+                                    </label>
+                                    <input type="number" id="taxRate" class="form-input" placeholder="e.g., 15" min="0" step="0.01" value="15">
+                                    <div class="form-hint">Dividend tax rate in Bangladesh</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bonus Shares Tab -->
+                        <div class="tab-content" id="bonusTab">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="bonusShares" class="form-label">
+                                        <i class="fas fa-boxes"></i> Current Shares
+                                    </label>
+                                    <input type="number" id="bonusShares" class="form-input" placeholder="e.g., 1000" min="0" step="1">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="bonusRatio" class="form-label">
+                                        <i class="fas fa-gift"></i> Bonus Ratio
+                                    </label>
+                                    <div class="ratio-input">
+                                        <input type="number" id="bonusRatioA" class="form-input" placeholder="e.g., 1" min="0" step="1" value="1">
+                                        <span class="ratio-separator">:</span>
+                                        <input type="number" id="bonusRatioB" class="form-input" placeholder="e.g., 10" min="1" step="1" value="10">
+                                    </div>
+                                    <div class="form-hint">For 1:10 bonus, enter 1 and 10</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="currentAvgPrice" class="form-label">
+                                        <i class="fas fa-tag"></i> Current Average Price (৳)
+                                    </label>
+                                    <input type="number" id="currentAvgPrice" class="form-input" placeholder="e.g., 100" min="0" step="0.01">
+                                    <div class="form-hint">Optional - for new average calculation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="calculateBonusBtn" class="btn btn-primary btn-lg btn-block">
+                        <i class="fas fa-calculator"></i> Calculate Dividend/Bonus
+                    </button>
+                    
+                    <div class="results-card" id="bonusResults">
+                        <div class="results-header">
+                            <h3><i class="fas fa-chart-bar"></i> Dividend/Bonus Results</h3>
+                            <div class="results-badge">
+                                <span id="bonusResultsStatus">Ready to calculate</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Dividend Results -->
+                        <div class="dividend-results" id="dividendResults">
+                            <h4>Cash Dividend Calculation</h4>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-boxes"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Total Shares</div>
+                                        <div class="stat-value" id="totalDividendShares">0</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-money-bills"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Gross Dividend</div>
+                                        <div class="stat-value" id="grossDividend">৳ 0.00</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-scale-balanced"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Tax Deducted</div>
+                                        <div class="stat-value" id="dividendTax">৳ 0.00</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card highlight">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Net Receivable</div>
+                                        <div class="stat-value" id="netDividend">৳ 0.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bonus Results -->
+                        <div class="bonus-results" id="bonusShareResults">
+                            <h4>Bonus Share Calculation</h4>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-boxes"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Current Shares</div>
+                                        <div class="stat-value" id="currentBonusShares">0</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-gift"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Bonus Shares</div>
+                                        <div class="stat-value" id="newBonusShares">0</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-boxes-stacked"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Total After Bonus</div>
+                                        <div class="stat-value" id="totalAfterBonus">0</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card highlight" id="newAvgContainer">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-calculator"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">New Average Price</div>
+                                        <div class="stat-value" id="newAvgAfterBonus">৳ 0.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About/How It Works -->
+            <section id="about" class="tool-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> How It Works</h2>
+                    <p class="section-description">Learn about each calculator and see examples</p>
+                </div>
+                
+                <div class="info-grid">
+                    <!-- Average Calculator Info -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Average Calculator</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <p>Calculate your new average price after buying more shares.</p>
+                            <div class="formula-box">
+                                <span class="formula-label">Formula:</span>
+                                <code>New Avg = (Current Cost + New Amount + Brokerage) ÷ (Current Qty + New Qty)</code>
+                            </div>
+                            <div class="example">
+                                <h4>Example: EBL Purchase</h4>
+                                <ul>
+                                    <li>Current: 6,230 shares @ 25.50৳</li>
+                                    <li>New Buy: 25,194৳ @ 24.70৳ per share</li>
+                                    <li>Brokerage: 125.97৳</li>
+                                    <li><strong>Result:</strong> 7,250 shares @ 25.40৳ average</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quantity Calculator Info -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-icon">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <h3>Quantity Calculator</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <p>Find how many shares you can buy with a specific amount.</p>
+                            <div class="formula-box">
+                                <span class="formula-label">Formula:</span>
+                                <code>Shares = Floor(Amount ÷ Price)<br>Avg Cost = (Amount + Brokerage) ÷ Shares</code>
+                            </div>
+                            <div class="example">
+                                <h4>Example: MATINSPINN</h4>
+                                <ul>
+                                    <li>Amount: 73,220৳</li>
+                                    <li>Price: 52.30৳ per share</li>
+                                    <li>Brokerage: 366.10৳ (0.5%)</li>
+                                    <li><strong>Result:</strong> 1,400 shares @ 52.56৳ average</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bonus Calculator Info -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <h3>Bonus/Dividend Calculator</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <p>Calculate cash dividends and bonus shares.</p>
+                            <div class="formula-box">
+                                <span class="formula-label">Dividend:</span>
+                                <code>Gross = Shares × (Div% × Face Value)<br>Net = Gross × (1 - Tax%)</code>
+                            </div>
+                            <div class="formula-box">
+                                <span class="formula-label">Bonus:</span>
+                                <code>Bonus = Current × (Ratio A ÷ Ratio B)<br>New Avg = (Current × Avg) ÷ Total</code>
+                            </div>
+                            <div class="example">
+                                <h4>Example: MATINSPINN Dividend</h4>
+                                <ul>
+                                    <li>Shares: 1,400</li>
+                                    <li>Dividend: 35% of 10৳</li>
+                                    <li>Tax: 15%</li>
+                                    <li><strong>Result:</strong> 4,900৳ gross, 4,165৳ net</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tips-card">
+                    <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
+                    <div class="tips-grid">
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h4>Auto-Calculate Brokerage</h4>
+                                <p>Brokerage is typically 0.5% of transaction amount in Bangladesh.</p>
+                            </div>
+                        </div>
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h4>Track Your Averages</h4>
+                                <p>Always calculate new averages after each purchase for accurate profit tracking.</p>
+                            </div>
+                        </div>
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-taxi"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h4>Tax Considerations</h4>
+                                <p>Remember 15% tax on dividends and 0.5% brokerage on all transactions.</p>
+                            </div>
+                        </div>
+                        <div class="tip-item">
+                            <div class="tip-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="tip-content">
+                                <h4>Mobile Friendly</h4>
+                                <p>Use this tool on your phone while trading for instant calculations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Zaber's Stock Tools</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link" id="exportData">
+                        <i class="fas fa-download"></i> Export Data
+                    </a>
+                    <a href="#" class="footer-link" id="printPage">
+                        <i class="fas fa-print"></i> Print
+                    </a>
+                    <a href="https://github.com" class="footer-link" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+                <div class="footer-copy">
+                    <p>&copy; <span id="currentYear"></span> Zaber's Stock Tools. Made with <i class="fas fa-heart"></i> for investors.</p>
+                    <p class="footer-note">This tool is for educational purposes. Always verify with your broker.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="toast-message">Calculation completed successfully!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
