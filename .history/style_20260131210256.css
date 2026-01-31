@@ -1,0 +1,128 @@
+/* Add these new styles to the existing style.css file */
+
+/* Performance Card Styles */
+.performance-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border-left: 4px solid var(--primary-color);
+}
+
+.performance-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.performance-label {
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.performance-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.performance-value.positive {
+    color: var(--success-color);
+}
+
+.performance-value.negative {
+    color: var(--danger-color);
+}
+
+.performance-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.status-label {
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.status-value {
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+}
+
+.status-value.profit {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--success-color);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.status-value.loss {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--danger-color);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.status-value.break-even {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.performance-message {
+    padding: var(--spacing-md) 0;
+    color: var(--gray-600);
+    font-style: italic;
+    text-align: center;
+}
+
+/* Gain/Loss Card Colors */
+.stat-card.profit {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.stat-card.profit .stat-icon,
+.stat-card.profit .stat-label,
+.stat-card.profit .stat-value {
+    color: white;
+}
+
+.stat-card.loss {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.stat-card.loss .stat-icon,
+.stat-card.loss .stat-label,
+.stat-card.loss .stat-value {
+    color: white;
+}
+
+/* Updated Navigation for 5 items */
+@media (min-width: 768px) {
+    .nav-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .nav-container {
+        flex-wrap: wrap;
+    }
+    
+    .nav-link {
+        flex: 0 0 calc(50% - 0.5rem);
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-link {
+        flex: 0 0 100%;
+    }
+}
